@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameDesigner Portfolio | Game Development & 3D Animation</title>
+    <meta name="description" content="Professional game designer specializing in game development, 3D animation, and video editing. Creating immersive gaming experiences.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+    <!-- GD CINEMATIC INTRO -->
+    <div id="gd-intro" class="gd-intro">
+    <div class="gd-logo-wrap">
+        <div class="gd-logo">GD</div>
+        <div class="gd-energy"></div>
+    </div>
+
+    <audio id="gd-sound" preload="auto">
+        <source src="audio/tadum.mp3" type="audio/mpeg">
+    </audio>
+    </div>
+
+
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-rain"></canvas>
+    
+    <!-- Particle System -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <div class="logo-icon">GD</div>
+                <span class="logo-text">GameDesigner</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#showcase" class="nav-link">Showcase</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="mobile-menu">
+            <a href="#home" class="mobile-link">Home</a>
+            <a href="#about" class="mobile-link">About</a>
+            <a href="#projects" class="mobile-link">Projects</a>
+            <a href="#showcase" class="mobile-link">Showcase</a>
+            <a href="#contact" class="mobile-link">Contact</a>
+        </div>
+    </nav>
+
+<!-- TOP TRANSITION ANIMATION -->
+<section id="top-transition">
+  <canvas id="sunCanvas"></canvas>
+</section>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-avatar">
+                    <div class="avatar-glow">GD</div>
+                </div>
+                <h1 class="hero-title">
+                    <span class="gradient-text">Game Designer</span>
+                    <span class="hero-subtitle">& Developer</span>
+                </h1>
+                <p class="hero-description">
+                    Crafting immersive gaming experiences through innovative design, 
+                    cutting-edge code, and stunning visuals.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My <span class="gradient-text">Expertise</span></h2>
+                <p class="section-description">
+                    Combining technical skills with creative vision to deliver exceptional gaming experiences.
+                </p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🎮</div>
+                    <h3>Game Development</h3>
+                    <p>Creating interactive gaming experiences with modern frameworks and engines.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎬</div>
+                    <h3>Video Editing</h3>
+                    <p>Professional video production and post-processing for gaming content.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3>3D Animation</h3>
+                    <p>Bringing characters and environments to life with stunning 3D animations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+        <section class="demo-section">
+        <div class="container">
+
+            <div class="section-header">
+            <h2 class="section-title gradient-text">OMINEX Live Demo</h2>
+            <p class="section-description">My AI assistant running in real time</p>
+            </div>
+
+            <div class="demo-container">
+
+            <div class="ominex-console">
+                <div class="ominex-header">
+                <span class="ai-dot"></span>
+                <span>OMINEX — AI Core Online</span>
+                </div>
+
+                <div class="ominex-screen" id="ominexScreen">
+                <div class="ominex-msg ai">
+                    Hello. I am OMINEX.  
+                    Type <b>Run it</b> to activate.
+                </div>
+                </div>
+
+                <div class="ominex-input">
+                <input id="ominexInput" type="text" placeholder="Talk to OMINEX..." />
+                <button id="ominexSend">Run it</button>
+                </div>
+            </div>
+
+            </div>
+
+        </div>
+        </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+                    <p class="about-text">
+                        I'm a passionate game designer and developer with a deep love for creating 
+                        immersive digital experiences. My journey combines technical expertise with 
+                        creative vision to bring gaming worlds to life.
+                    </p>
+                    <div class="achievements">
+                        <div class="achievement">
+                            <div class="achievement-icon">🎮</div>
+                            <div class="achievement-text">
+                                <span class="achievement-number">2+ Years</span>
+                                <span class="achievement-label">Game Development</span>
+                            </div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">📦</div>
+                            <div class="achievement-text">
+                                <span class="achievement-number">10+ Projects</span>
+                                <span class="achievement-label">Completed</span>
+                            </div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">🎨</div>
+                            <div class="achievement-text">
+                                <span class="achievement-number">3D Animation</span>
+                                <span class="achievement-label">Specialist</span>
+                            </div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">🏆</div>
+                            <div class="achievement-text">
+                                <span class="achievement-number">Industry</span>
+                                <span class="achievement-label">Recognition</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="profile-card">
+                        <div class="profile-avatar">GD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-description">Explore my latest gaming creations and interactive experiences</p>
+            </div>
+           <div class="projects-grid">
+
+    <!-- Game Awaits -->
+    <div class="project-card cyber-card" data-project="game-awaits">
+        <div class="project-image cyber-runner">
+            <img src="public/images/game-awaits.jpg" alt="Game Awaits">
+            <div class="project-overlay">
+                <button class="btn btn-primary btn-sm"><i class="fas fa-play"></i> Play Demo</button>
+                <button class="btn btn-outline btn-sm"><i class="fas fa-code"></i> View Code</button>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="project-category">Endless Runner Game</div>
+            <h3 class="project-title">Game Awaits</h3>
+            <p class="project-description">
+                A calming, color-based endless runner designed to reduce stress and improve focus through smooth motion and visual feedback.
+            </p>
+            <div class="project-tags">
+                <span class="tag">Unity</span>
+                <span class="tag">C#</span>
+                <span class="tag">Game Design</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CineVault -->
+    <div class="project-card cyber-card" data-project="cinevault">
+        <div class="project-image fantasy-ui">
+            <img src="public/images/cinevault.jpg" alt="CineVault">
+            <div class="project-overlay">
+                <button class="btn btn-primary btn-sm"><i class="fas fa-globe"></i> Open App</button>
+                <button class="btn btn-outline btn-sm"><i class="fas fa-code"></i> View Code</button>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="project-category">Movie Platform</div>
+            <h3 class="project-title">CineVault</h3>
+            <p class="project-description">
+                A modern movie and series discovery platform using TMDB and Watchmode APIs to help users find where to stream content.
+            </p>
+            <div class="project-tags">
+                <span class="tag">Next.js</span>
+                <span class="tag">API</span>
+                <span class="tag">Tailwind</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section id="showcase" class="showcase-section">
+        <div class="floating-elements">
+            <div class="floating-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5,3 19,12 5,21"></polygon>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="gradient-text">Interactive Showcase</span>
+                </h2>
+                <p class="section-description">
+                    Experience my latest work through interactive demos, visual presentations, and immersive content 
+                    spanning game development, 3D animation, and video production.
+                </p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Games">Games</button>
+                <button class="filter-btn" data-category="Animations">Animations</button>
+                <button class="filter-btn" data-category="Videos">Videos</button>
+                <button class="filter-btn" data-category="UI/UX">UI/UX</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number gradient-text">50+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number gradient-text">100K+</div>
+                    <div class="stat-label">Downloads</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number gradient-text">4.8★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <!-- Showcase Grid -->
+            <div class="showcase-grid" id="showcaseGrid">
+                <!-- Items will be populated by JavaScript -->
+            </div>
+
+            <!-- Featured Showcase -->
+            <div class="featured-section">
+                <h3 class="section-title">
+                    <span class="gradient-text">Featured Interactive Demo</span>
+                </h3>
+
+                <div class="featured-grid">
+                    <div class="featured-content">
+                        <div class="featured-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5,3 19,12 5,21"></polygon>
+                            </svg>
+                        </div>
+                        
+                        <h4>Next-Gen Gaming Experience</h4>
+                        
+                        <p>
+                            Dive into my most ambitious project featuring cutting-edge technology, 
+                            immersive gameplay mechanics, and stunning visual effects.
+                        </p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature-dot"></div>
+                                    <span>Real-time Ray Tracing</span>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-dot"></div>
+                                    <span>Advanced AI Systems</span>
+                                </div>
+                            </div>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature-dot"></div>
+                                    <span>Procedural Generation</span>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-dot"></div>
+                                    <span>Cross-Platform Support</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="featured-buttons">
+                            <button class="btn btn-primary" id="featuredPlayBtn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5,3 19,12 5,21"></polygon>
+                                </svg>
+                                Launch Demo
+                            </button>
+                            <button class="btn btn-outline">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                                View Code
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="featured-demo">
+                        <div class="demo-container">
+                            <div class="demo-background">
+                                <div class="floating-element"></div>
+                                <div class="floating-element"></div>
+                                <div class="floating-element"></div>
+                            </div>
+                            
+                            <div class="demo-content">
+                                <div class="play-button">
+                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5,3 19,12 5,21"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="demo-info">
+                                    <div class="demo-title">Interactive Demo Ready</div>
+                                    <div class="demo-subtitle">Click to experience the future of gaming</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    Get In <span class="gradient-text">Touch</span>
+                </h2>
+                <p class="section-description">
+                    Ready to bring your gaming vision to life? Let's discuss your project 
+                    and create something amazing together.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h3 class="section-title">
+                        <span class="gradient-text">Send a Message</span>
+                    </h3>
+                    
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="input-container">
+                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" name="name" placeholder="Your Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-container">
+                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    <input type="email" name="email" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                <input type="text" name="subject" placeholder="Subject" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your message..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                            </svg>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-container">
+                    <h3 class="section-title">
+                        <span class="gradient-text">Contact Information</span>
+                    </h3>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p class="contact-value">luvomaphela0@gmail.com</p>
+                                <p class="contact-desc">Send me an email anytime</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone</h4>
+                                <p class="contact-value">+27 83 607 8398</p>
+                                <p class="contact-desc">Available for calls</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Location</h4>
+                                <p class="contact-value">Gaming Hub, Tech City</p>
+                                <p class="contact-desc">Open to remote work</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collaboration-card">
+                        <h4>Let's Collaborate</h4>
+                        <p>
+                            I'm always excited to work on new projects and bring creative visions to life. 
+                            Whether you need game development, 3D animation, or video editing services, 
+                            I'm here to help make your ideas a reality.
+                        </p>
+                        <div class="features">
+                            <div class="feature">
+                                <div class="feature-dot"></div>
+                                <span>Quick response within 24 hours</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-dot"></div>
+                                <span>Free initial consultation</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-dot"></div>
+                                <span>Flexible project timelines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for project details -->
+    <div id="projectModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <svg class="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20,6 9,17 4,12"></polyline>
+            </svg>
+            <div>
+                <div class="toast-title">Message Sent!</div>
+                <div class="toast-description">Thank you for your message. I'll get back to you soon.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">GD</div>
+                        <span class="logo-text">GameDesigner</span>
+                    </div>
+                    <p class="footer-description">
+                        Creating immersive gaming experiences through code, visuals, and animation.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Skills</h3>
+                    <ul class="footer-links">
+                        <li>Game Development</li>
+                        <li>3D Animation</li>
+                        <li>Video Editing</li>
+                        <li>UI/UX Design</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Email</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 GameDesigner Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

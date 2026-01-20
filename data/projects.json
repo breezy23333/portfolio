@@ -1,0 +1,145 @@
+[
+  {
+    "id": "game-awaits",
+    "title": "Game Awaits — Endless Runner (Unity/C#)",
+    "role": "Game Dev · Designer · Programmer",
+    "year": "2025",
+    "tags": [
+      "Unity",
+      "C#",
+      "Game Design",
+      "2D"
+    ],
+    "summary": "A one-lane endless runner with candy collectibles and color-based mood effects. Built with Unity and C#.",
+    "thumb": "img/game-awaits-thumb.svg",
+    "hero": "img/game-awaits-hero.svg",
+    "media": [
+      "img/game-awaits-1.svg",
+      "img/game-awaits-2.svg"
+    ],
+    "links": {
+      "demo": "#",
+      "github": "#",
+      "video": "videos/game-awaits-demo.mp4"
+    },
+    "page": "projects/game-awaits.html"
+  },
+  {
+    "id": "ominex",
+    "title": "OMINEX — AI Assistant (Web + Voice)",
+    "role": "Full‑stack · AI · UI/UX",
+    "year": "2025",
+    "tags": [
+      "Python",
+      "Flask",
+      "Web Audio",
+      "TTS",
+      "AI"
+    ],
+    "summary": "Conversational AI with mood visualization, memory, and voice output. Web UI with Flask backend.",
+    "thumb": "img/ominex-thumb.svg",
+    "hero": "img/ominex-hero.svg",
+    "media": [
+      "img/ominex-1.svg",
+      "img/ominex-2.svg"
+    ],
+    "links": {
+      "demo": "#",
+      "github": "#",
+      "video": "videos/ominex-showcase.mp4"
+    },
+    "page": "projects/ominex.html"
+  },
+  {
+    "id": "trade-bot",
+    "title": "Crypto Trade Bot Dashboard (Streamlit)",
+    "role": "Python Dev · Data Viz",
+    "year": "2025",
+    "tags": [
+      "Python",
+      "Streamlit",
+      "Binance API",
+      "TA Indicators"
+    ],
+    "summary": "Signal monitor with SMA/EMA/RSI/MACD, alerts, and paper trading. Styled dashboard with live price charts.",
+    "thumb": "img/tradebot-thumb.svg",
+    "hero": "img/tradebot-hero.svg",
+    "media": [
+      "img/tradebot-1.svg",
+      "img/tradebot-2.svg"
+    ],
+    "links": {
+      "demo": "#",
+      "github": "#",
+      "video": "videos/tradebot-demo.mp4"
+    },
+    "page": "projects/trade-bot.html"
+  },
+  {
+    "id": "motion-reel",
+    "title": "Motion Graphics Reel",
+    "role": "Video Editor · Motion Designer",
+    "year": "2025",
+    "tags": [
+      "After Effects",
+      "Premiere Pro",
+      "Motion"
+    ],
+    "summary": "A fast-cut showcase of logo reveals, social edits, and animated titles.",
+    "thumb": "img/motion-thumb.svg",
+    "hero": "img/motion-hero.svg",
+    "media": [
+      "img/motion-1.svg",
+      "img/motion-2.svg"
+    ],
+    "links": {
+      "video": "videos/motion-reel.mp4"
+    },
+    "page": "projects/motion-reel.html"
+  },
+  {
+    "id": "99-fashion",
+    "title": "99 Fashion — Neon Futurism Lookbook",
+    "role": "3D · Art Direction",
+    "year": "2025",
+    "tags": [
+      "3D",
+      "Lookdev",
+      "Animation"
+    ],
+    "summary": "Concept lookbook with animated garments, neon lights, and shop display sequence.",
+    "thumb": "img/99-thumb.svg",
+    "hero": "img/99-hero.svg",
+    "media": [
+      "img/99-1.svg",
+      "img/99-2.svg"
+    ],
+    "links": {
+      "video": "videos/99-lookbook.mp4"
+    },
+    "page": "projects/99-fashion.html"
+  },
+  {
+    "id": "js-minis",
+    "title": "JavaScript Minis — APIs & Widgets",
+    "role": "Frontend Dev",
+    "year": "2025",
+    "tags": [
+      "JavaScript",
+      "APIs",
+      "Web"
+    ],
+    "summary": "Small web apps: Weather app, Joke generator, SpaceX launch tracker, Currency converter.",
+    "thumb": "img/js-thumb.svg",
+    "hero": "img/js-hero.svg",
+    "media": [
+      "img/js-1.svg",
+      "img/js-2.svg"
+    ],
+    "links": {
+      "demo": "#",
+      "github": "#"
+    },
+    "page": "projects/js-minis.html"
+  }
+]
