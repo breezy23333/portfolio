@@ -1,4 +1,134 @@
 // Gaming Portfolio JavaScript - Unified Main Script
+window.speechSynthesis.onvoiceschanged = () => {
+  speechSynthesis.getVoices();
+};
+
+
+const ominexScreen = document.getElementById("ominexScreen");
+const ominexInput = document.getElementById("ominexInput");
+const ominexSend = document.getElementById("ominexSend");
+
+function addMsg(type, text) {
+    const msg = document.createElement("div");
+    msg.className = type === "user" ? "ominex-msg user" : "ominex-msg ai";
+    msg.textContent = text;
+
+    ominexScreen.appendChild(msg);
+    ominexScreen.scrollTop = ominexScreen.scrollHeight;
+}
+
+function speakText(text) {
+  if (!('speechSynthesis' in window)) return;
+
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.rate = 0.95;
+  speech.pitch = 1;
+  speech.volume = 1;
+
+  const voices = speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    const femaleVoice = voices.find(v =>
+      v.name.toLowerCase().includes("zira") ||
+      v.name.toLowerCase().includes("google")
+    );
+    if (femaleVoice) speech.voice = femaleVoice;
+  }
+
+  const avatar = document.getElementById("ominexAvatar");
+  if (avatar) avatar.classList.add("speaking");
+
+  speech.onend = () => {
+    if (avatar) avatar.classList.remove("speaking");
+  };
+
+  speechSynthesis.speak(speech);
+}
+
+
+
+function typeReply(text) {
+  const msg = document.createElement("div");
+  msg.className = "ominex-msg ai";
+  ominexScreen.appendChild(msg);
+
+  let i = 0;
+  const interval = setInterval(() => {
+    msg.textContent += text.charAt(i);
+    i++;
+    ominexScreen.scrollTop = ominexScreen.scrollHeight;
+
+    if (i >= text.length) {
+      clearInterval(interval);
+      speakText(text); // 🔥 SPEAK AFTER TYPING
+    }
+  }, 18);
+}
+
+
+ominexSend.onclick = async () => {
+  const text = ominexInput.value.trim();
+  if (!text) return;
+
+  addMsg("user", text);
+  ominexInput.value = "";
+
+  const thinking = document.createElement("div");
+  thinking.className = "ominex-msg ai";
+  thinking.textContent = "OMINEX is thinking...";
+  ominexScreen.appendChild(thinking);
+  ominexScreen.scrollTop = ominexScreen.scrollHeight;
+
+
+  // ===== LOCAL MODE → Real AI =====
+ 
+
+  // ===== ONLINE MODE → Demo Brain =====
+ const demoBrain = [
+  {
+    trigger: ["run it", "activate"],
+    reply: "Neural core online. Emotion layer stable. OMINEX ready."
+  },
+  {
+    trigger: ["who are you"],
+    reply: "I am OMINEX. An adaptive AI system engineered by Luvo Maphela."
+  },
+  {
+    trigger: ["what can you do"],
+    reply: "I simulate reasoning, memory, search systems, trade planning, and voice interaction layers."
+  },
+  {
+    trigger: ["status"],
+    reply: "All cognitive modules operational. No system errors detected."
+  },
+  {
+    trigger: ["portfolio"],
+    reply: "Portfolio mode engaged. Displaying Luvo Maphela's creative systems."
+  },
+  {
+    trigger: ["ai"],
+    reply: "Artificial intelligence is not thinking. It is structured probability."
+  }
+];
+
+
+ setTimeout(() => {
+  thinking.remove();
+
+  const lower = text.toLowerCase();
+  let reply = "Processing complete. Expand neural module in full version.";
+
+  for (let item of demoBrain) {
+    if (item.trigger.some(word => lower.includes(word))) {
+      reply = item.reply;
+      break;
+    }
+  }
+
+  typeReply(reply);
+}, 800);
+
+};
+
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('%c🎮 GameDesigner Portfolio', 'color: #4ade80; font-size: 24px; font-weight: bold;');
@@ -183,72 +313,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Showcase functionality
     function initShowcase() {
-        const showcaseItems = [
+       const showcaseItems = [
             {
                 id: 1,
-                title: "Neon City Chase",
+                title: "Space Shooter Prototype",
                 category: "Games",
                 type: "Game Demo",
-                thumbnail: "linear-gradient(135deg, #06b6d4, #8b5cf6)",
-                description: "High-speed racing game through cyberpunk cityscape with dynamic lighting and particle effects",
-                rating: 4.8,
-                downloads: "15K+",
-                tech: ["Unity", "C#", "Shader Graph"]
+                thumbnail: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+                description: "Fast-paced 2D/3D space shooter featuring enemy waves, projectile systems, and responsive controls.",
+                rating: 4.7,
+                downloads: "—",
+                tech: ["Unity", "C#", "Game Design"]
             },
+           
             {
-                id: 2,
-                title: "Dragon Flight Animation",
-                category: "Animations",
-                type: "3D Animation",
-                thumbnail: "linear-gradient(135deg, #ef4444, #f97316)",
-                description: "Cinematic dragon flight sequence with advanced particle systems and realistic fire effects",
-                rating: 4.9,
-                downloads: "8K+",
-                tech: ["Blender", "Maya", "Houdini"]
+                id: 99,
+                title: "Minecraft World Project",
+                category: "Games",
+                type: "World Design",
+                thumbnail: "linear-gradient(135deg, #16a34a, #22c55e)",
+                description: "Custom-designed Minecraft world focused on level design, environmental storytelling, and gameplay flow.",
+                rating: 4.6,
+                playable: true,
+                demoUrl: "./Minecraft/index.html",
+                tech: ["Minecraft", "World Design", "Level Design"]
             },
+
+
             {
                 id: 3,
-                title: "Game Launch Trailer",
-                category: "Videos",
-                type: "Video Edit",
-                thumbnail: "linear-gradient(135deg, #3b82f6, #10b981)",
-                description: "Epic trailer showcasing game features with professional editing and sound design",
-                rating: 4.7,
-                downloads: "25K+",
-                tech: ["Premiere Pro", "After Effects", "DaVinci"]
+                title: "Crypto Trade Bot Dashboard",
+                category: "UI/UX",
+                type: "UI/UX",
+                thumbnail: "linear-gradient(135deg, #8b5cf6, #6366f1)",
+                description: "Interactive trading bot dashboard with real-time indicators, signals, and performance visualization.",
+                rating: 4.8,
+                downloads: "—",
+                tech: ["Python", "Streamlit", "APIs", "Data Visualization"]
             },
             {
                 id: 4,
-                title: "RPG Interface Design",
-                category: "UI/UX",
-                type: "UI Design",
-                thumbnail: "linear-gradient(135deg, #8b5cf6, #ec4899)",
-                description: "Complete interface suite for fantasy RPG with animated elements and intuitive navigation",
-                rating: 4.6,
-                downloads: "12K+",
-                tech: ["Figma", "Unity UI", "CSS"]
+                title: "Cinematic Animation Shot",
+                category: "Animations",
+                type: "3D Animation",
+                thumbnail: "linear-gradient(135deg, #f97316, #ef4444)",
+                description: "Stylized cinematic animation focusing on lighting, camera movement, and mood-driven storytelling.",
+                rating: 4.9,
+                downloads: "—",
+                tech: ["Blender", "Lighting", "Animation"]
             },
             {
                 id: 5,
-                title: "Space Combat Demo",
-                category: "Games",
-                type: "Gameplay",
-                thumbnail: "linear-gradient(135deg, #6366f1, #3b82f6)",
-                description: "Fast-paced space combat with procedural asteroid fields and AI-driven enemies",
+                title: "Motion Graphics Animation",
+                category: "Animations",
+                type: "Animation Reel",
+                thumbnail: "linear-gradient(135deg, #14b8a6, #0ea5e9)",
+                description: "Smooth motion graphics animation designed for visual impact, rhythm, and clean transitions.",
                 rating: 4.8,
-                downloads: "20K+",
-                tech: ["Unreal Engine", "C++", "Blueprint"]
+                downloads: "—",
+                tech: ["After Effects", "Motion Design", "Visual Effects"]
             },
             {
                 id: 6,
-                title: "Character Showcase",
-                category: "Animations",
-                type: "Animation Reel",
-                thumbnail: "linear-gradient(135deg, #10b981, #14b8a6)",
-                description: "Professional character animation reel featuring advanced rigging and motion capture",
-                rating: 4.9,
-                downloads: "18K+",
-                tech: ["Maya", "MotionBuilder", "Zbrush"]
+                title: "Experimental Interactive Prototype",
+                category: "Games",
+                type: "Prototype",
+                thumbnail: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+                description: "Experimental interactive prototype exploring mechanics, visuals, and user feedback in a playable format.",
+                rating: 4.7,
+                downloads: "—",
+                tech: ["Game Prototyping", "Interaction Design", "Creative Coding"]
             }
         ];
 
@@ -437,19 +571,28 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <button onclick="showNotification('Demo launched!', 'success')" style="background: var(--primary); color: var(--primary-foreground); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);">
+                       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                            ${item.playable ? `
+                            <button onclick="window.open('${item.demoUrl}', '_blank')" 
+                            style="background: var(--primary); color: var(--primary-foreground); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="5,3 19,12 5,21"></polygon>
                                 </svg>
                                 Play Demo
                             </button>
-                            <button onclick="showNotification('Code repository opened!', 'info')" style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            ` : ''}
+
+                            <button onclick="showNotification('Code repository opened!', 'info')" 
+                            style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                                 </svg>
                                 View Code
                             </button>
+
+                        </div>
+
                         </div>
                     </div>
                 </div>
@@ -656,13 +799,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     });
 
-    // Featured demo button
-    const featuredPlayBtn = document.getElementById('featuredPlayBtn');
-    if (featuredPlayBtn) {
-        featuredPlayBtn.addEventListener('click', () => {
-            showNotification('Featured demo launched! 🎮', 'success');
-        });
-    }
+   // Featured demo button
+window.open('./Minecraft/index.html', '_blank')
+
 });
 
 // Utility functions
@@ -678,40 +817,8 @@ function debounce(func, wait) {
     };
 }
 
-// === OMINEX LIVE BRAIN LINK ===
-ominexSend.onclick = async () => {
-  const text = ominexInput.value.trim();
-  if (!text) return;
+// === OMINEX HYBRID MODE ===
 
-  // show user message
-  addMsg("user", text);
-  ominexInput.value = "";
-
-  // create thinking bubble
-  const thinking = document.createElement("div");
-  thinking.className = "ominex-msg ai";
-  thinking.textContent = "OMINEX is thinking...";
-  ominexScreen.appendChild(thinking);
-  ominexScreen.scrollTop = ominexScreen.scrollHeight;
-
-  try {
-    const res = await fetch("http://127.0.0.1:5000/api/demo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
-    });
-
-    const data = await res.json();
-
-    // remove thinking and show real reply
-    thinking.remove();
-    addMsg("ai", data.reply);
-
-  } catch (e) {
-    thinking.remove();
-    addMsg("ai", "Connection error.");
-  }
-};
 
 window.addEventListener("load", () => {
   const intro = document.getElementById("gd-intro");
@@ -784,4 +891,42 @@ if (!sunCanvas) {
   }
 
   drawSun();
+}
+
+// Project button links (NO DESIGN CHANGE)
+document.querySelectorAll(".project-card").forEach(card => {
+  const project = card.dataset.project;
+
+  const playBtn = card.querySelector(".btn-primary");
+  const codeBtn = card.querySelector(".btn-outline");
+
+  if (project === "game-awaits") {
+    playBtn?.addEventListener("click", () => {
+      window.open("https://github.com/breezy23333/game-awaits", "_blank");
+    });
+
+    codeBtn?.addEventListener("click", () => {
+      window.open("https://github.com/breezy23333/game-awaits", "_blank");
+    });
+  }
+
+  if (project === "cinevault") {
+    playBtn?.addEventListener("click", () => {
+      window.open("https://cinevault-by-luvo.vercel.app", "_blank");
+
+    });
+
+    codeBtn?.addEventListener("click", () => {
+      window.open("https://github.com/breezy23333/cinevault", "_blank");
+    });
+  }
+});
+
+function speak(text) {
+  const synth = window.speechSynthesis;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  utter.volume = 1;
+  synth.speak(utter);
 }
