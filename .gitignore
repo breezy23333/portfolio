@@ -21,3 +21,8 @@ node_modules/
 __pycache__/
 *.pyc
 .env
+
+# OMINEX local data (too big for GitHub)
+Ominex_fixed_female_voice/data/*.db
+Ominex_fixed_female_voice/data/
+*.db
