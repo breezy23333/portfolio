@@ -1,1 +1,23 @@
-.vercel
+# ---- Unity (NEVER COMMIT THESE) ----
+**/Library/
+**/Temp/
+**/Obj/
+**/Build/
+**/Builds/
+**/Logs/
+**/UserSettings/
+
+# Unity Package Cache
+**/PackageCache/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.env

@@ -1,0 +1,4 @@
+repository "gameawaits2D/gameawaits2D@11270604441346@cloud"
+  path "/"
+    br "/main"
+    co "/main"

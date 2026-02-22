@@ -1,0 +1,256 @@
+/* ===================== OMINEX — Unified Futuristic Theme ===================== */
+:root{
+  --bg:#000;
+  --text:#e9eefb;
+  --muted:rgba(255,255,255,.70);
+  --glass:rgba(255,255,255,.06);
+  --glass-strong:rgba(10,16,24,.55);
+  --border:rgba(255,255,255,.10);
+  --border-soft:rgba(255,255,255,.08);
+  --accent:#00e3b2;
+  --accent-2:#8ad;
+
+  --hud-green:#17ff78;
+  --hud-green-d:#0ec45a;
+  --hud-line:rgba(23,255,120,.25);
+}
+
+/* Base reset / typography */
+*{box-sizing:border-box}
+html,body{height:100%}
+html,body{background:var(--bg)!important;color:var(--text);margin:0;font:14px/1.5 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+img{max-width:100%;display:block}
+a{color:#9be7ff;text-decoration:none} a:hover{text-decoration:underline}
+.hidden{display:none!important}
+
+/* Remove any legacy page-wide backgrounds */
+body::before,body::after,main::before,main::after{content:none!important}
+.app,.layout,.container,.wrapper,.content,.page,.background,.backdrop,.overlay,.hero,.noise{
+  background:transparent!important;background-image:none!important
+}
+body>.bg,body>.background,body>.backdrop,body>.overlay{display:none!important}
+
+/* ---------------------- BACKGROUND ---------------------- */
+.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none}
+#bg-matrix{background:#000;opacity:1}
+
+/* Lift the UI above the canvas */
+main,header,.panel,.chat,.composer,.dock,#actionDock{position:relative;z-index:1}
+
+/* ---------------------- LAYOUT ---------------------- */
+
+/* ===== layout: dock inside main ===== */
+.panel.panel-grid{
+  max-width:1200px;
+  margin:0 auto;
+  padding:16px 18px 120px;
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.main-col{ min-width:0 }               /* allow chat to shrink responsibly */
+.with-dock{ padding-left:0 }           /* old offset no longer needed */
+
+/* dock is now sticky in the column, not fixed */
+.dock{
+  position: sticky;
+  top: 20px;                           /* how far from the top of main */
+  left: auto; transform:none;          /* cancel old fixed styles */
+  z-index: 10;
+}
+
+/* backgrounds — enable Grid & Holo */
+.bg-layer{ position:fixed; inset:0; z-index:0; pointer-events:none }
+#bg-matrix{ background:#000 }
+#bg-grid{
+  background:
+    radial-gradient(circle at 50% -20%, rgba(0,180,255,.35), transparent 60%),
+    radial-gradient(circle at 120% 120%, rgba(145,66,255,.28), transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,.06) 18px 19px),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,.06) 18px 19px),
+    #001018;
+  opacity:.95;
+}
+#bg-holo{
+  background:
+    radial-gradient(40% 30% at 20% 10%, rgba(255,0,200,.28), transparent),
+    radial-gradient(30% 35% at 80% 20%, rgba(0,200,255,.26), transparent),
+    radial-gradient(25% 30% at 70% 80%, rgba(0,255,120,.24), transparent),
+    #000;
+  opacity: .95;
+}
+.hidden{ display:none !important }
+
+/* responsive: dock collapses to bottom bar */
+@media (max-width: 900px){
+  .panel.panel-grid{ grid-template-columns: 1fr; padding-bottom: 160px }
+  .dock{
+    position: fixed;
+    left: 50%; bottom: 10px; top: auto; transform: translateX(-50%);
+    flex-direction: row; width: auto; gap: 8px; padding: 10px 12px;
+  }
+}
+
+/* ---------------------- HUD CONSOLE ---------------------- */
+.hud-console{width:min(1100px,94vw);margin:14px auto}
+.hud-frame{
+  position:relative;border-radius:16px;
+  background:linear-gradient(180deg, rgba(0,0,0,.7), rgba(0,0,0,.55));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 0 1px rgba(23,255,120,.08) inset, 0 20px 60px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+.hud-frame::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    conic-gradient(from 45deg at 12px 12px, var(--hud-line) 0 25%, transparent 0 100%),
+    conic-gradient(from 225deg at calc(100% - 12px) 12px, var(--hud-line) 0 25%, transparent 0 100%),
+    conic-gradient(from -45deg at 12px calc(100% - 12px), var(--hud-line) 0 25%, transparent 0 100%),
+    conic-gradient(from 135deg at calc(100% - 12px) calc(100% - 12px), var(--hud-line) 0 25%, transparent 0 100%);
+  mask: radial-gradient(circle at 12px 12px, #000 11px, transparent 12px) top left,
+        radial-gradient(circle at 12px 12px, #000 11px, transparent 12px) top right,
+        radial-gradient(circle at 12px 12px, #000 11px, transparent 12px) bottom left,
+        radial-gradient(circle at 12px 12px, #000 11px, transparent 12px) bottom right;
+  mask-size:50% 50%;mask-repeat:no-repeat;
+}
+.hud-top{padding:18px}
+.hud-bottom{margin-top:18px;padding:14px}
+
+/* top screen bezel */
+.hud-bezel{
+  border-radius:12px;
+  background:
+    radial-gradient(120% 140% at 20% 0%, rgba(0,200,255,.18), transparent 60%),
+    radial-gradient(120% 140% at 110% 120%, rgba(145,66,255,.12), transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,.05) 18px 19px),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,.05) 18px 19px),
+    #0b141c;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 0 1px rgba(23,255,120,.12) inset, 0 0 40px rgba(23,255,120,.08);
+  padding:16px;min-height:220px;
+}
+.hud-title{
+  display:inline-block;margin:2px 0 12px;padding:6px 10px;font-weight:600;
+  letter-spacing:.14em;font-size:11px;color:var(--text);
+  background:linear-gradient(90deg, rgba(23,255,120,.18), transparent);
+  border:1px solid rgba(23,255,120,.25);border-radius:8px;
+  text-shadow:0 0 8px rgba(23,255,120,.45);
+}
+
+/* chat */
+#chat{min-height:42vh}
+.msg{display:flex;margin:14px 0}
+.msg .bubble{
+  max-width:860px;padding:14px 16px;border-radius:14px;
+  background:var(--glass-strong);border:1px solid var(--border);backdrop-filter:blur(6px)
+}
+.msg.user{justify-content:flex-end}
+.msg.user .bubble{background:rgba(255,255,255,.04)}
+.typing{margin:6px 0;color:var(--muted)}
+.typing .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--muted);margin-left:4px;animation:blink 1.2s infinite}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* bottom deck */
+.hud-deck{
+  display:grid;grid-template-columns:120px 1fr 140px;gap:12px;
+  background:linear-gradient(180deg, rgba(12,16,20,.9), rgba(12,16,20,.8));
+  border:1px solid var(--border-soft);border-radius:12px;padding:12px;
+  box-shadow:0 0 0 1px rgba(23,255,120,.10) inset;
+}
+.deck-left,.deck-right{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+
+/* dials */
+.dial{width:64px;height:64px;border-radius:50%;
+  background:
+    conic-gradient(from 180deg, var(--hud-green) 0 30%, #113 0 100%),
+    radial-gradient(circle at 50% 50%, #0b1a14 0 40%, transparent 41% 100%);
+  border:2px solid var(--hud-green-d);box-shadow:0 0 16px rgba(23,255,120,.35) inset;
+}
+.dial.small{width:42px;height:42px}
+
+/* sliders */
+.slider{width:100%;height:10px;border-radius:10px;background:#0e1821;border:1px solid var(--border-soft);overflow:hidden}
+.slider span{display:block;height:100%;background:linear-gradient(90deg,#0a3,var(--hud-green));box-shadow:0 0 16px rgba(23,255,120,.45)}
+
+/* composer */
+.composer{display:flex;gap:10px}
+.hud-composer{
+  position:static;transform:none;width:100%;
+  background:#0b1218;border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:10px
+}
+.hud-composer input{flex:1;background:transparent;color:var(--text);border:none;outline:none}
+.btn{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#1a2334;color:#e6edf3;font-weight:600;cursor:pointer}
+.btn.neon{border-color:rgba(23,255,120,.45);background:linear-gradient(180deg,#0f3,#0b5);color:#021;text-shadow:0 0 6px rgba(23,255,120,.6)}
+.btn:hover{filter:brightness(1.06)}
+
+/* ---------------------- LEFT DOCK ---------------------- */
+.dock{
+  position:fixed;left:16px;top:50%;transform:translateY(-50%);
+  width:92px;padding:12px;display:flex;flex-direction:column;gap:10px;
+  background:rgba(10,12,18,.70);backdrop-filter:blur(8px);
+  border:1px solid var(--border-soft);border-radius:18px;z-index:40
+}
+.dock-title{text-transform:uppercase;font-size:10px;letter-spacing:.16em;color:rgba(255,255,255,.65);text-align:center;margin-bottom:6px}
+.dock-btn,.dock-toggle{
+  height:38px;border-radius:12px;border:1px solid var(--border-soft);
+  background:var(--glass);color:var(--text);font-size:12px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;user-select:none
+}
+.dock-btn:hover,.dock-toggle:hover{background:rgba(255,255,255,.12)}
+.dock-toggle{gap:6px;padding:0 8px}
+.dock-toggle input{accent-color:var(--accent-2)}
+.dock-sep{border:none;height:1px;background:var(--border-soft);margin:2px 0}
+
+/* ---------------------- RESPONSIVE ---------------------- */
+@media (max-width:900px){
+  .dock{left:50%;bottom:10px;top:auto;transform:translateX(-50%);flex-direction:row;width:auto;gap:8px;padding:10px 12px}
+  .with-dock{padding-left:0;padding-bottom:96px}
+  .hud-deck{grid-template-columns:1fr}
+  .deck-left,.deck-right{flex-direction:row;justify-content:flex-start}
+}
+
+.dock-btn.active{ border-color: rgba(23,255,120,.55); box-shadow:0 0 0 2px rgba(23,255,120,.18) inset; }
+
+/* --- Avatar sizing & placement ----------------------------------------- */
+.app-head{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+
+/* keep the avatar small and responsive */
+.avatar-wrap{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  width: clamp(60px, 7vw, 96px);          /* <= adjust here if you want smaller/larger */
+  flex: 0 0 auto;
+}
+
+#avatar{
+  position: static !important;            /* avoid any stray absolute/fixed rules */
+  width: 100%;
+  aspect-ratio: 1 / 1;                    /* perfect circle */
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px rgba(23,255,120,.28),
+    0 0 22px rgba(23,255,120,.35);
+}
+
+#avatar.speaking{ box-shadow:
+    0 0 0 3px rgba(23,255,120,.42),
+    0 0 28px rgba(23,255,120,.55); }
+
+#avatar.active{ box-shadow:
+    0 0 0 3px rgba(23,255,120,.34),
+    0 0 24px rgba(23,255,120,.45); }
+
+#avatar + .badge{ margin-top:4px; font-size:12px; opacity:.9 }
+
+/* never let <img> expand beyond its container width */
+img{ max-width:100%; height:auto; }
+
+/* smaller on phones */
+@media (max-width: 900px){
+  .avatar-wrap{ width:64px; }
+}
+

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OMINEX</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Background layers -->
+<canvas id="bg-matrix" class="bg-layer" aria-hidden="true"></canvas>
+<div id="bg-grid" class="bg-layer hidden" aria-hidden="true"></div>
+<div id="bg-holo" class="bg-layer hidden" aria-hidden="true"></div>
+
+<main class="panel panel-grid">
+  <!-- Dock is now inside MAIN (so it aligns with content) -->
+  <aside id="actionDock" class="dock">
+    <div class="dock-title">Theme</div>
+    <button id="themeMatrix" class="dock-btn">Matrix</button>
+    <button id="themeGrid" class="dock-btn">Cyber&nbsp;Grid</button>
+    <button id="themeHolo" class="dock-btn">Holo</button>
+    <hr class="dock-sep" />
+    <label class="dock-toggle">
+      <input type="checkbox" id="ttsToggle" checked /> Voice
+    </label>
+  </aside>
+
+  <!-- Everything else goes in the right column -->
+  <div class="main-col">
+    <header class="app-head">
+      <div class="brand">
+        <h1>OMINEX</h1>
+        <p>Fresh start. Type and hit Send.</p>
+        <div id="status" class="status">Backend: connected</div>
+      </div>
+      <div class="avatar-wrap">
+        <img id="avatar" src="{{ url_for('static', filename='img/ominex.png') }}" alt="OMINEX avatar" />
+        <div id="mood" class="badge badge-neutral">Mood: Neutral</div>
+      </div>
+    </header>
+
+    <div class="hud-console">
+      <div class="hud-frame hud-top">
+        <div class="hud-bezel">
+          <div class="hud-title">OMINEX // NEURAL LINK</div>
+          <div id="chat" class="chat"></div>
+        </div>
+      </div>
+      <div class="hud-frame hud-bottom">
+        <div class="hud-deck">
+          <div class="deck-left"><div class="dial"></div><div class="dial small"></div></div>
+          <div class="deck-center">
+            <div class="composer hud-composer">
+              <input id="input" placeholder="Type a message…" />
+              <button id="send" class="btn neon">Send</button>
+              <button id="testVoice" class="btn">Test Voice</button>
+            </div>
+          </div>
+          <div class="deck-right">
+            <div class="slider"><span style="width:62%"></span></div>
+            <div class="slider"><span style="width:28%"></span></div>
+            <div class="slider"><span style="width:86%"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}?v=1"></script>
+</body>
+</html>

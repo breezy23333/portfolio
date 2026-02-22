@@ -1,0 +1,50 @@
+.game-over {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,20,40,0.9), rgba(0,0,0,0.95));
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    z-index: 100;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.game-over h2 {
+    font-size: 3rem;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.game-over p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.game-over button {
+    margin-top: 20px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    background: linear-gradient(90deg, #00ffff, #00ff99);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.game-over button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

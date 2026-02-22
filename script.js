@@ -1,134 +1,93 @@
-// Gaming Portfolio JavaScript - Unified Main Script
-window.speechSynthesis.onvoiceschanged = () => {
-  speechSynthesis.getVoices();
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const ominexScreen = document.getElementById("ominexScreen");
+  const ominexInput  = document.getElementById("ominexInput");
+  const ominexSend   = document.getElementById("ominexSend");
 
+  if (!ominexScreen || !ominexInput || !ominexSend) return;
 
-const ominexScreen = document.getElementById("ominexScreen");
-const ominexInput = document.getElementById("ominexInput");
-const ominexSend = document.getElementById("ominexSend");
-
-function addMsg(type, text) {
+  function addMsg(type, text) {
     const msg = document.createElement("div");
     msg.className = type === "user" ? "ominex-msg user" : "ominex-msg ai";
     msg.textContent = text;
-
     ominexScreen.appendChild(msg);
     ominexScreen.scrollTop = ominexScreen.scrollHeight;
-}
-
-function speakText(text) {
-  if (!('speechSynthesis' in window)) return;
-
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.rate = 0.95;
-  speech.pitch = 1;
-  speech.volume = 1;
-
-  const voices = speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    const femaleVoice = voices.find(v =>
-      v.name.toLowerCase().includes("zira") ||
-      v.name.toLowerCase().includes("google")
-    );
-    if (femaleVoice) speech.voice = femaleVoice;
   }
 
-  const avatar = document.getElementById("ominexAvatar");
-  if (avatar) avatar.classList.add("speaking");
-
-  speech.onend = () => {
-    if (avatar) avatar.classList.remove("speaking");
-  };
-
-  speechSynthesis.speak(speech);
-}
-
-
-
-function typeReply(text) {
-  const msg = document.createElement("div");
-  msg.className = "ominex-msg ai";
-  ominexScreen.appendChild(msg);
-
-  let i = 0;
-  const interval = setInterval(() => {
-    msg.textContent += text.charAt(i);
-    i++;
-    ominexScreen.scrollTop = ominexScreen.scrollHeight;
-
-    if (i >= text.length) {
-      clearInterval(interval);
-      speakText(text); // 🔥 SPEAK AFTER TYPING
-    }
-  }, 18);
-}
-
-
-ominexSend.onclick = async () => {
-  const text = ominexInput.value.trim();
-  if (!text) return;
-
-  addMsg("user", text);
-  ominexInput.value = "";
-
-  const thinking = document.createElement("div");
-  thinking.className = "ominex-msg ai";
-  thinking.textContent = "OMINEX is thinking...";
-  ominexScreen.appendChild(thinking);
-  ominexScreen.scrollTop = ominexScreen.scrollHeight;
-
-
-  // ===== LOCAL MODE → Real AI =====
- 
-
-  // ===== ONLINE MODE → Demo Brain =====
- const demoBrain = [
-  {
-    trigger: ["run it", "activate"],
-    reply: "Neural core online. Emotion layer stable. OMINEX ready."
-  },
-  {
-    trigger: ["who are you"],
-    reply: "I am OMINEX. An adaptive AI system engineered by Luvo Maphela."
-  },
-  {
-    trigger: ["what can you do"],
-    reply: "I simulate reasoning, memory, search systems, trade planning, and voice interaction layers."
-  },
-  {
-    trigger: ["status"],
-    reply: "All cognitive modules operational. No system errors detected."
-  },
-  {
-    trigger: ["portfolio"],
-    reply: "Portfolio mode engaged. Displaying Luvo Maphela's creative systems."
-  },
-  {
-    trigger: ["ai"],
-    reply: "Artificial intelligence is not thinking. It is structured probability."
+  function speakText(text) {
+    if (!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 0.95;
+    speech.pitch = 1;
+    speech.volume = 1;
+    speechSynthesis.speak(speech);
   }
-];
 
+  function typeReply(text) {
+    const msg = document.createElement("div");
+    msg.className = "ominex-msg ai";
+    ominexScreen.appendChild(msg);
 
- setTimeout(() => {
-  thinking.remove();
+    let i = 0;
+    const interval = setInterval(() => {
+      msg.textContent += text.charAt(i++);
+      ominexScreen.scrollTop = ominexScreen.scrollHeight;
+      if (i >= text.length) {
+        clearInterval(interval);
+        speakText(text);
+      }
+    }, 18);
+  }
 
-  const lower = text.toLowerCase();
-  let reply = "Processing complete. Expand neural module in full version.";
+  // ✅ warm up backend on load (optional but recommended)
+  fetch("https://ominex-backend-sxeg.onrender.com/api/ping", { cache: "no-store" })
+    .then(() => console.log("✅ OMINEX warmed"))
+    .catch(() => console.log("⚠️ warm failed (sleep or network)"));
 
-  for (let item of demoBrain) {
-    if (item.trigger.some(word => lower.includes(word))) {
-      reply = item.reply;
-      break;
+  typeReply("OMINEX online. Ask me anything.");
+
+  async function sendToOMINEX(message) {
+    addMsg("user", message);
+
+    typeReply("Waking up OMINEX… (Render sleep). One moment.");
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+
+    try {
+      const res = await fetch("https://ominex-backend-sxeg.onrender.com/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+        signal: controller.signal
+      });
+
+      const data = await res.json();
+      if (data.reply) typeReply(data.reply);
+      else typeReply("I got a response, but no reply field returned.");
+
+    } catch (err) {
+      console.error("OMINEX API error:", err);
+      typeReply("Still waking up. Please try again in 10–20 seconds.");
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
-  typeReply(reply);
-}, 800);
+  ominexSend.addEventListener("click", () => {
+    const msg = ominexInput.value.trim();
+    if (!msg) return;
+    ominexInput.value = "";
+    sendToOMINEX(msg);
+  });
 
-};
-
+  ominexInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      ominexSend.click();
+    }
+  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('%c🎮 GameDesigner Portfolio', 'color: #4ade80; font-size: 24px; font-weight: bold;');
@@ -314,24 +273,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Showcase functionality
     function initShowcase() {
        const showcaseItems = [
-            {
+                {
                 id: 1,
-                title: "Space Shooter Prototype",
+                title: "Star Runner – Solar Challenge",
                 category: "Games",
-                type: "Game Demo",
-                thumbnail: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                description: "Fast-paced 2D/3D space shooter featuring enemy waves, projectile systems, and responsive controls.",
-                rating: 4.7,
+                type: "3D Endless Runner",
+                thumbnail: "img/projects/star runner.png",
+                description: "High-speed endless runner inspired by Race The Sun. Features dynamic sunset lighting, asteroid waves, boost pads, and progressive difficulty scaling.",
+                rating: 4.8,
                 downloads: "—",
-                tech: ["Unity", "C#", "Game Design"]
+
+                playable: true,   // 🔥 THIS WAS MISSING
+                demoUrl: "./STAR_RUNNER/index.html", // 🔥 MAKE SURE PATH IS CORRECT
+
+                tech: ["Three.js", "JavaScript", "Procedural Systems", "Game Design"]
             },
+
            
             {
                 id: 99,
                 title: "Minecraft World Project",
                 category: "Games",
                 type: "World Design",
-                thumbnail: "linear-gradient(135deg, #16a34a, #22c55e)",
+                thumbnail: "img/projects/minecraft.png",
                 description: "Custom-designed Minecraft world focused on level design, environmental storytelling, and gameplay flow.",
                 rating: 4.6,
                 playable: true,
@@ -340,34 +304,40 @@ document.addEventListener('DOMContentLoaded', function() {
             },
 
 
-            {
-                id: 3,
+           {
+                id: 8,
                 title: "Crypto Trade Bot Dashboard",
                 category: "UI/UX",
-                type: "UI/UX",
-                thumbnail: "linear-gradient(135deg, #8b5cf6, #6366f1)",
+                type: "Web App",
+                thumbnail: "img/projects/trade bot.png",
                 description: "Interactive trading bot dashboard with real-time indicators, signals, and performance visualization.",
                 rating: 4.8,
                 downloads: "—",
-                tech: ["Python", "Streamlit", "APIs", "Data Visualization"]
-            },
+                tech: ["Python", "Streamlit", "APIs", "Data Visualization"],
+                demoUrl: "https://crypto-trade-bot-wdza2prbmz7wnnwrnjrjcm.streamlit.app/"
+ // change later to live URL
+                },
+
+
             {
-                id: 4,
-                title: "Cinematic Animation Shot",
-                category: "Animations",
-                type: "3D Animation",
-                thumbnail: "linear-gradient(135deg, #f97316, #ef4444)",
-                description: "Stylized cinematic animation focusing on lighting, camera movement, and mood-driven storytelling.",
+                id: 7,
+                title: "99 Fashion – Lookbook Promo",
+                category: "Videos",
+                type: "Fashion Promo",
+                thumbnail: "img/projects/99 fashion.png",
+                description: "High-energy fashion lookbook promo for 99 Fashion featuring bold visuals, dynamic transitions, and Gen-Z inspired styling.",
                 rating: 4.9,
-                downloads: "—",
-                tech: ["Blender", "Lighting", "Animation"]
+                playable: true,
+                demoUrl: "./videos/99-lookbook.mp4.mp4",
+                tech: ["After Effects", "Video Editing", "Color Grading", "Creative Direction"]
             },
+
             {
                 id: 5,
                 title: "Motion Graphics Animation",
                 category: "Animations",
                 type: "Animation Reel",
-                thumbnail: "linear-gradient(135deg, #14b8a6, #0ea5e9)",
+                thumbnail: "img/projects/animation reel.png",
                 description: "Smooth motion graphics animation designed for visual impact, rhythm, and clean transitions.",
                 rating: 4.8,
                 downloads: "—",
@@ -378,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: "Experimental Interactive Prototype",
                 category: "Games",
                 type: "Prototype",
-                thumbnail: "linear-gradient(135deg, #ec4899, #8b5cf6)",
+                thumbnail: "img/projects/weather.png",
                 description: "Experimental interactive prototype exploring mechanics, visuals, and user feedback in a playable format.",
                 rating: 4.7,
                 downloads: "—",
@@ -407,8 +377,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 itemElement.style.animationDelay = `${index * 0.1}s`;
                 
                 itemElement.innerHTML = `
-                    <div class="item-thumbnail" style="background: ${item.thumbnail}">
-                        <div class="play-overlay">
+                    <div class="item-thumbnail" 
+                        style="background-image: url('${item.thumbnail}');
+                                background-size: cover;
+                                background-position: center;">
+
+                        <div class="play-overlay"
+                            onclick="window.open('${item.demoUrl}', '_blank')">
+
                             <div class="play-button">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="5,3 19,12 5,21"></polygon>
@@ -444,7 +420,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="item-content">
                         <div class="item-meta">
                             <span class="item-category">${item.category}</span>
-                            <span class="item-downloads">${item.downloads} downloads</span>
+                            <span class="item-downloads">${item.downloads || '—'}</span>
+
                         </div>
                         
                         <h3 class="item-title">${item.title}</h3>
@@ -456,30 +433,54 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         
                         <div class="item-footer">
-                            <button class="view-details" onclick="openModal(${item.id})">
-                                View Details
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </button>
-                            
-                            <div class="item-rating">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
-                                </svg>
-                                <span>${item.rating}</span>
-                            </div>
-                        </div>
+
+    ${item.title === 'Crypto Trade Bot Dashboard' ? `
+        <button class="tradebot-btn"
+            onclick="window.open('${item.demoUrl}', '_blank')"
+            style="
+                background: var(--primary);
+                color: var(--primary-foreground);
+                border: none;
+                padding: 10px 16px;
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+            ">
+            ▶ Open Trade Bot
+        </button>
+    ` : ''}
+
+    <button class="view-details" onclick="openModal(${item.id})">
+        View Details
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15,3 21,3 21,9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+    </button>
+
+    <div class="item-rating">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
+        </svg>
+        <span>${item.rating}</span>
+    </div>
+
+</div>
+
                     </div>
                 `;
                 
                 itemElement.addEventListener('click', (e) => {
-                    if (!e.target.closest('.action-buttons') && !e.target.closest('.view-details')) {
+                    if (
+                        !e.target.closest('.action-buttons') &&
+                        !e.target.closest('.view-details') &&
+                        !e.target.closest('.tradebot-btn')
+                    ) {
                         openModal(item.id);
                     }
                 });
+
                 
                 showcaseGrid.appendChild(itemElement);
             });
@@ -530,9 +531,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        window.openModal = function(itemId) {
+        function openModal(itemId) {
             const item = showcaseItems.find(i => i.id === itemId);
-            if (!item || !modal || !modalBody) return;
+            if (!item || !item.demoUrl) return;
+
+            window.open(item.demoUrl, "_blank", "noopener,noreferrer");
+
+
             
             modalBody.innerHTML = `
                 <div style="padding-top: 2rem;">
@@ -556,7 +561,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
                                 </svg>
                                 <span>${item.rating}</span>
-                                <span style="margin-left: 1rem;">${item.downloads} downloads</span>
+                                <span style="margin-left: 1rem;">${item.downloads || '—'}</span>
+
                             </div>
                         </div>
                         
@@ -573,15 +579,56 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
 
-                            ${item.playable ? `
-                            <button onclick="window.open('${item.demoUrl}', '_blank')" 
-                            style="background: var(--primary); color: var(--primary-foreground); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="5,3 19,12 5,21"></polygon>
-                                </svg>
-                                Play Demo
-                            </button>
-                            ` : ''}
+                   ${item.playable ? `
+                        ${item.category === "Videos" ? `
+                            <div style="position:fixed; inset:0; background:black; z-index:99999; display:flex; align-items:center; justify-content:center;">
+                                
+                                <video id="fullscreenVideo"
+                                    controls
+                                    autoplay
+                                    style="width:100vw; height:100vh; object-fit:contain; background:black;">
+                                    <source src="${item.demoUrl}" type="video/mp4">
+                                </video>
+
+                                <button onclick="document.getElementById('fullscreenVideo').parentElement.remove()" 
+                                    style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.6); color:white; border:none; padding:10px 15px; border-radius:8px; font-size:18px; cursor:pointer;">
+                                    ✕
+                                </button>
+                            </div>
+                        ` : `
+                            ${item.title.includes("Crypto Trade Bot") ? `
+                                <button onclick="window.open('${item.demoUrl}', '_blank')" 
+                                    style="
+                                    background: var(--primary);
+                                    color: var(--primary-foreground);
+                                    border: none;
+                                    padding: 12px 24px;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    ">
+                                    ▶ Open Trade Bot
+                                </button>
+                                ` : ''}
+
+
+                            <button
+                                onclick="window.open('${item.demoUrl}', '_blank')"
+                                style="
+                                    background: var(--primary);
+                                    color: var(--primary-foreground);
+                                    border: none;
+                                    padding: 12px 24px;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                ">
+                                ▶ Play Demo
+                                </button>
+
+                        `}
+                    ` : ''}
+
 
                             <button onclick="showNotification('Code repository opened!', 'info')" 
                             style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
@@ -799,8 +846,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     });
 
-   // Featured demo button
-window.open('./Minecraft/index.html', '_blank')
+
 
 });
 
@@ -929,4 +975,35 @@ function speak(text) {
   utter.pitch = 1.05;
   utter.volume = 1;
   synth.speak(utter);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bubbles = document.querySelectorAll(".ominex-bubble.ai");
+
+  if (!("speechSynthesis" in window)) return;
+
+  bubbles.forEach((bubble, index) => {
+    const text = bubble.innerText.trim();
+    bubble.innerText = "";
+
+    let i = 0;
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        bubble.innerText += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          speakOMINEX(text);
+        }
+      }, 18);
+    }, index * 1200);
+  });
+});
+
+function speakOMINEX(text) {
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.95;
+  utter.pitch = 1;
+  utter.volume = 1;
+  speechSynthesis.speak(utter);
 }

@@ -97,6 +97,11 @@
         </div>
     </section>
 
+<button id="testClick" style="position:fixed; bottom:20px; right:20px; z-index:99999;">
+  TEST CLICK
+</button>
+
+
     <!-- Skills Section -->
     <section id="skills" class="skills-section">
         <div class="container">
@@ -128,47 +133,61 @@
     </section>
 
     <!-- Interactive Demo Section -->
-        <section class="demo-section">
-        <div class="container">
+<!-- OMINEX Demo Preview Section -->
+<section id="ominex-preview" class="projects-section">
+  <div class="container">
 
-            <div class="section-header">
-            <h2 class="section-title gradient-text">OMINEX Live Demo</h2>
-            <p class="section-description">My AI assistant running in real time</p>
-            </div>
+    <!-- Section header (same style as others) -->
+    <div class="section-header">
+      <h2 class="section-title gradient-text">OMINEX</h2>
+      <p class="section-description">
+        Experimental AI system — interactive demo available
+      </p>
+    </div>
 
-            <div class="demo-container">
+    <!-- Preview Card -->
+    <div class="project-card" style="max-width: 100%; cursor: default;">
+      
+      <!-- Visual Preview Area -->
+      <div class="project-image"
+           style="
+             height: 220px;
+             background: radial-gradient(circle at center, rgba(0,255,255,0.25), transparent 60%),
+                         linear-gradient(135deg, #020617, #0f172a, #001e2a);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+           ">
+        <button class="btn btn-primary"
+        onclick="window.open('https://ominex-backend-sxeg.onrender.com/demo', '_blank', 'noopener,noreferrer')">
+        Open Live Demo
+        </button>
+      </div>
 
-            <div class="ominex-console">
-                <div class="ominex-header">
-                <span class="ai-dot"></span>
-                <span>OMINEX — AI Core Online</span>
-                </div>
+      <!-- Content -->
+      <div class="project-content">
+        <div class="project-category">AI Assistant · Experimental</div>
 
-                <div class="ominex-avatar-wrapper">
-                    <div class="ominex-avatar" id="ominexAvatar">
-                        <div class="ominex-core"></div>
-                    </div>
-                    <div class="ominex-status">Neural Core Active</div>
-                </div>
+        <h3 class="project-title">OMINEX</h3>
 
+        <p class="project-description">
+          OMINEX is an experimental AI assistant designed and built by Luvo Maphela.
+          This portfolio view is a presentation layer only.  
+          The live Python-based system runs separately.
+        </p>
 
-                <div class="ominex-screen" id="ominexScreen">
-                <div class="ominex-msg ai">
-                    Hello. I am OMINEX.  
-                    Type <b>Run it</b> to activate.
-                </div>
-                </div>
-
-                <div class="ominex-input">
-                <input id="ominexInput" type="text" placeholder="Talk to OMINEX..." />
-                <button id="ominexSend">Run it</button>
-                </div>
-            </div>
-
-            </div>
-
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">AI Systems</span>
+          <span class="tag">UI Architecture</span>
         </div>
-        </section>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 
 
     <!-- About Section -->
@@ -234,7 +253,7 @@
     <!-- Game Awaits -->
     <div class="project-card cyber-card" data-project="game-awaits">
         <div class="project-image cyber-runner">
-            <img src="public/images/game-awaits.jpg" alt="Game Awaits">
+            <img src="img/projects/game awaits.png", alt="Game Awaits">
             <div class="project-overlay">
                 <button class="btn btn-primary btn-sm"><i class="fas fa-play"></i> Play Demo</button>
                 <button class="btn btn-outline btn-sm"><i class="fas fa-code"></i> View Code</button>
@@ -257,7 +276,7 @@
     <!-- CineVault -->
     <div class="project-card cyber-card" data-project="cinevault">
         <div class="project-image fantasy-ui">
-            <img src="public/images/cinevault.jpg" alt="CineVault">
+            <img src="img/projects/cinevault.png", alt="CineVault">
             <div class="project-overlay">
                 <button class="btn btn-primary btn-sm"><i class="fas fa-globe"></i> Open App</button>
                 <button class="btn btn-outline btn-sm"><i class="fas fa-code"></i> View Code</button>
@@ -335,88 +354,95 @@
 
             <!-- Featured Showcase -->
             <div class="featured-section">
-                <h3 class="section-title">
-                    <span class="gradient-text">Featured Interactive Demo</span>
-                </h3>
+  <h3 class="section-title">
+    <span class="gradient-text">Featured Interactive Demo</span>
+  </h3>
 
-                <div class="featured-grid">
-                    <div class="featured-content">
-                        <div class="featured-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="5,3 19,12 5,21"></polygon>
-                            </svg>
-                        </div>
-                        
-                        <h4>Next-Gen Gaming Experience</h4>
-                        
-                        <p>
-                            Dive into my most ambitious project featuring cutting-edge technology, 
-                            immersive gameplay mechanics, and stunning visual effects.
-                        </p>
-                        
-                        <div class="features-grid">
-                            <div class="feature-list">
-                                <div class="feature-item">
-                                    <div class="feature-dot"></div>
-                                    <span>Real-time Ray Tracing</span>
-                                </div>
-                                <div class="feature-item">
-                                    <div class="feature-dot"></div>
-                                    <span>Advanced AI Systems</span>
-                                </div>
-                            </div>
-                            <div class="feature-list">
-                                <div class="feature-item">
-                                    <div class="feature-dot"></div>
-                                    <span>Procedural Generation</span>
-                                </div>
-                                <div class="feature-item">
-                                    <div class="feature-dot"></div>
-                                    <span>Cross-Platform Support</span>
-                                </div>
-                            </div>
-                        </div>
+  <div class="featured-grid">
 
-                        <div class="featured-buttons">
-                            <a href="./Minecraft/index.html"
-                            target="_blank" class="btn btn-primary">
-                                <svg ...></svg>
-                                Launch Demo
-                            </a>
+    <!-- LEFT CONTENT -->
+    <div class="featured-content">
+      <div class="featured-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5,3 19,12 5,21"></polygon>
+        </svg>
+      </div>
 
-                            <button class="btn btn-outline">
+      <h4>Next-Gen Gaming Experience</h4>
 
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                </svg>
-                                View Code
-                            </button>
-                        </div>
-                    </div>
+      <p>
+        Dive into my most ambitious project featuring cutting-edge technology,
+        immersive gameplay mechanics, and stunning visual effects.
+      </p>
 
-                    <div class="featured-demo">
-                        <div class="demo-container">
-                            <div class="demo-background">
-                                <div class="floating-element"></div>
-                                <div class="floating-element"></div>
-                                <div class="floating-element"></div>
-                            </div>
-                            
-                            <div class="demo-content">
-                                <div class="play-button">
-                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="5,3 19,12 5,21"></polygon>
-                                    </svg>
-                                </div>
-                                <div class="demo-info">
-                                    <div class="demo-title">Interactive Demo Ready</div>
-                                    <div class="demo-subtitle">Click to experience the future of gaming</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="features-grid">
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Real-time Ray Tracing</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Advanced AI Systems</span>
+          </div>
+        </div>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Procedural Generation</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Cross-Platform Support</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ BUTTONS (CORRECT PLACE) -->
+      <div class="featured-buttons">
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-open="demo">
+          ▶ demo
+        </button>
+
+        <a
+          href="https://github.com/YOUR-USERNAME/YOUR-REPO"
+          target="_blank"
+          class="btn btn-outline">
+          View Code
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT DEMO -->
+    <div class="featured-demo">
+      <div class="demo-container">
+        <div class="demo-background">
+          <div class="floating-element"></div>
+          <div class="floating-element"></div>
+          <div class="floating-element"></div>
+        </div><br><br>
+
+        <div class="demo-content">
+          <div class="play-button">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5,3 19,12 5,21"></polygon>
+            </svg>
+          </div>
+          <div class="demo-info">
+            <div class="demo-title">Interactive Demo Ready</div>
+            <div class="demo-subtitle">Click to experience the future of gaming</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
         </div>
     </section>
 
@@ -441,48 +467,16 @@
                     </h3>
                     
                     <form id="contactForm" class="contact-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <div class="input-container">
-                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                    <input type="text" name="name" placeholder="Your Name" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-container">
-                                    <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                    </svg>
-                                    <input type="email" name="email" placeholder="Your Email" required>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="input-container">
-                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                                <input type="text" name="subject" placeholder="Subject" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <textarea name="message" placeholder="Your message..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
-                            </svg>
-                            Send Message
-                        </button>
-                    </form>
+
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="text" name="title" placeholder="Subject" required>
+
+                        <textarea name="message" placeholder="Your message..." required></textarea>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+
                 </div>
 
                 <!-- Contact Information -->
@@ -630,6 +624,15 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+  (function () {
+    emailjs.init("60MXi00qiXOVv63rM");
+  })();
+</script>
+
+<script src="script.js" defer></script>
+
 </body>
 </html>
