@@ -22,18 +22,8 @@
         <div class="gd-logo">GD</div>
         <div class="gd-energy"></div>
     </div>
-
-    <audio id="gd-sound" preload="auto">
-        <source src="audio/tadum.mp3" type="audio/mpeg">
-    </audio>
     </div>
 
-
-    <!-- Matrix Rain Background -->
-    <canvas id="matrix-rain"></canvas>
-    
-    <!-- Particle System -->
-    <canvas id="particles"></canvas>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -66,11 +56,6 @@
             <a href="#contact" class="mobile-link">Contact</a>
         </div>
     </nav>
-
-<!-- TOP TRANSITION ANIMATION -->
-<section id="top-transition">
-  <canvas id="sunCanvas"></canvas>
-</section>
 
 
     <!-- Hero Section -->
@@ -132,55 +117,63 @@
         </div>
     </section>
 
-    <!-- Interactive Demo Section -->
-<!-- OMINEX Demo Preview Section -->
-<section id="ominex-preview" class="projects-section">
+<!-- ================= OMINEX LIVE DEMO ================= -->
+<!-- ================= OMINEX HEADER ================= -->
+<section id="ominex-intro" class="ominex-intro-section">
   <div class="container">
-
-    <!-- Section header (same style as others) -->
     <div class="section-header">
-      <h2 class="section-title gradient-text">OMINEX</h2>
-      <p class="section-description">
-        Experimental AI system — interactive demo available
-      </p>
-    </div>
 
-    <!-- Preview Card -->
-    <div class="project-card" style="max-width: 100%; cursor: default;">
-      
-      <!-- Visual Preview Area -->
-      <div class="project-image"
-           style="
-             height: 220px;
-             background: radial-gradient(circle at center, rgba(0,255,255,0.25), transparent 60%),
-                         linear-gradient(135deg, #020617, #0f172a, #001e2a);
-             display: flex;
-             align-items: center;
-             justify-content: center;
-           ">
-        <button class="btn btn-primary"
-        onclick="window.open('https://ominex-backend-sxeg.onrender.com/demo', '_blank', 'noopener,noreferrer')">
-        Open Live Demo
-        </button>
+      <span class="ominex-badge">AI Assistant · Experimental</span>
+
+      <h2 class="section-title">
+        OMINEX <span class="gradient-text">AI System</span>
+      </h2>
+
+      <p class="section-description">
+        Experimental AI system built by <strong>Luvo Maphela</strong>,
+        designed to demonstrate real-time interaction, system architecture,
+        and intelligent interfaces directly on this website.
+      </p>
+
+      <div class="ominex-tags">
+        <span>Python</span>
+        <span>AI Systems</span>
+        <span>UI Architecture</span>
       </div>
 
-      <!-- Content -->
-      <div class="project-content">
-        <div class="project-category">AI Assistant · Experimental</div>
+    </div>
+  </div>
+  <div class="container">
 
-        <h3 class="project-title">OMINEX</h3>
+    <div class="ominex-hero">
 
-        <p class="project-description">
-          OMINEX is an experimental AI assistant designed and built by Luvo Maphela.
-          This portfolio view is a presentation layer only.  
-          The live Python-based system runs separately.
-        </p>
+      <!-- VISUAL SURFACE -->
+      <div class="ominex-visual">
 
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">AI Systems</span>
-          <span class="tag">UI Architecture</span>
+        <!-- IDLE -->
+        <div class="ominex-idle">
+          OMINEX IDLE…
         </div>
+
+        <!-- RUN BUTTON (CENTERED) -->
+        <button class="btn btn-primary ominex-run-center" id="runOminex">
+          ▶ Run It
+        </button>
+
+        <!-- CHAT -->
+        <div class="ominex-chat" id="ominexChat">
+          <div class="ominex-screen" id="ominexScreen">
+            <div class="ominex-msg ai">
+              Hi, I’m OMINEX. Ask me anything.
+            </div>
+          </div>
+
+          <div class="ominex-input">
+            <input id="ominexInput" placeholder="Type your message…" />
+            <button id="ominexSend">Send</button>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -188,8 +181,7 @@
   </div>
 </section>
 
-
-
+<div class="ominex-spacer"></div>
     <!-- About Section -->
     <section id="about" class="about-section">
         <div class="container">

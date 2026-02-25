@@ -123,10 +123,14 @@ function hideTyping(){
 
 /* --------------------- Backend connectivity --------------------- */
 async function backendIsUp(){
-  try { const r = await fetch('/api/ping', { cache:'no-store' }); if (r.ok) return true; } catch {}
-  try { const r2 = await fetch('/ping', { cache:'no-store' }); return r2.ok; } catch {}
-  return false;
+  try {
+    const r = await fetch("https://ominex-backend-sxeg.onrender.com/api/ping", { cache:'no-store' });
+    return r.ok;
+  } catch {
+    return false;
+  }
 }
+
 async function updateStatus(){
   const ok = await backendIsUp();
   setStatus(ok ? 'Backend: connected' : 'Backend: disconnected');
@@ -199,13 +203,16 @@ if (testVoiceEl){ testVoiceEl.addEventListener('click', () => speak("Hello, I'm 
 
 /* -------------------------- Send flow -------------------------- */
 async function postChat(payload){
-  const opts = { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) };
-  try {
-    const r = await fetch('/api/chat', opts);
-    if (r.ok) return await r.json();
-  } catch {}
-  const r2 = await fetch('/chat', opts);
-  return await r2.json();
+  const r = await fetch(
+    "https://ominex-backend-sxeg.onrender.com/api/demo",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }
+  );
+  if (!r.ok) throw new Error("Demo API unreachable");
+  return await r.json();
 }
 
 async function sendMessage(text){

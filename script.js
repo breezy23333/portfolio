@@ -1,7 +1,56 @@
+/* ================================
+   OMINEX — CLEAN FRONTEND (WORKING)
+================================ */
+
+const API_BASE = "https://ominex-backend-sxeg.onrender.com";
+let OMINEX_BOOTED = false;
+let selectedVoice = null;
+
+const OMINEX_INTRO = `
+Hello. I am OMINEX.
+
+I was created by Luvo Maphela as an experimental intelligence system.
+This interface is a demonstration layer, showing how interaction works.
+
+Ask me anything.
+`.trim();
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  warmBackend();
+});
+
+async function warmBackend() {
+  try {
+    const r = await fetch(`${API_BASE}/api/ping`, { cache: "no-store" });
+    const j = await r.json();
+    console.log("✅ ping:", j);
+  } catch (e) {
+    console.warn("⚠ ping failed (Render sleeping?)", e);
+  }
+}
+
+// --- keep Render awake (optional) ---
+setInterval(() => {
+  fetch(`${API_BASE}/api/ping`, { cache: "no-store" }).catch(() => {});
+}, 5 * 60 * 1000);
+
+// voices reload
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    selectedVoice = null;
+  };
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const ominexScreen = document.getElementById("ominexScreen");
   const ominexInput  = document.getElementById("ominexInput");
   const ominexSend   = document.getElementById("ominexSend");
+  const runBtn = document.getElementById("runOminex");
+  const hero         = document.querySelector(".ominex-hero");
+  const idle         = document.querySelector(".ominex-idle");
+  const chat         = document.querySelector(".ominex-chat");
 
   if (!ominexScreen || !ominexInput || !ominexSend) return;
 
@@ -13,14 +62,28 @@ document.addEventListener("DOMContentLoaded", () => {
     ominexScreen.scrollTop = ominexScreen.scrollHeight;
   }
 
+  function getFemaleVoice() {
+    const voices = speechSynthesis.getVoices();
+    return (
+      voices.find(v => /zira|susan|amy|emma|female|woman/i.test(v.name)) ||
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en")) ||
+      null
+    );
+  }
+
   function speakText(text) {
     if (!("speechSynthesis" in window)) return;
-    speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.95;
-    speech.pitch = 1;
-    speech.volume = 1;
-    speechSynthesis.speak(speech);
+
+    if (!selectedVoice) selectedVoice = getFemaleVoice();
+    window.speechSynthesis.cancel();
+
+    const u = new SpeechSynthesisUtterance(text);
+    if (selectedVoice) u.voice = selectedVoice;
+    u.rate = 0.95;
+    u.pitch = 1.12;
+    u.volume = 1;
+
+    window.speechSynthesis.speak(u);
   }
 
   function typeReply(text) {
@@ -36,26 +99,40 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(interval);
         speakText(text);
       }
-    }, 18);
+    }, 14);
   }
 
-  // ✅ warm up backend on load (optional but recommended)
-  fetch("https://ominex-backend-sxeg.onrender.com/api/ping", { cache: "no-store" })
-    .then(() => console.log("✅ OMINEX warmed"))
-    .catch(() => console.log("⚠️ warm failed (sleep or network)"));
+  // Warm backend once (no await at top-level)
+  
+  runBtn?.addEventListener("click", () => {
+    if (idle) idle.style.display = "none";
+    if (chat) chat.style.display = "flex";
+    if (runBtn) runBtn.style.display = "none";
+    hero?.classList.add("ominex-running");
 
-  typeReply("OMINEX online. Ask me anything.");
+    if (!OMINEX_BOOTED) {
+      OMINEX_BOOTED = true;
+      typeReply(OMINEX_INTRO);
+    }
+
+    ominexInput.focus();
+  });
 
   async function sendToOMINEX(message) {
     addMsg("user", message);
 
-    typeReply("Waking up OMINEX… (Render sleep). One moment.");
+    const thinking = document.createElement("div");
+    thinking.className = "ominex-msg ai";
+    thinking.textContent = "⏳ Thinking…";
+    ominexScreen.appendChild(thinking);
+    ominexScreen.scrollTop = ominexScreen.scrollHeight;
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
 
     try {
-      const res = await fetch("https://ominex-backend-sxeg.onrender.com/api/chat", {
+      // ✅ REAL endpoint:
+        const res = await fetch(`${API_BASE}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -63,22 +140,25 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await res.json();
+      thinking.remove();
+
       if (data.reply) typeReply(data.reply);
-      else typeReply("I got a response, but no reply field returned.");
+      else typeReply("No reply returned.");
 
     } catch (err) {
-      console.error("OMINEX API error:", err);
-      typeReply("Still waking up. Please try again in 10–20 seconds.");
+      console.error("OMINEX fetch error:", err);
+      thinking.remove();
+      typeReply("Connection issue / backend sleeping. Try again in 10–30 seconds.");
     } finally {
-      clearTimeout(timeout);
+      clearTimeout(timeoutId);
     }
   }
 
   ominexSend.addEventListener("click", () => {
-    const msg = ominexInput.value.trim();
-    if (!msg) return;
+    const text = ominexInput.value.trim();
+    if (!text) return;
     ominexInput.value = "";
-    sendToOMINEX(msg);
+    sendToOMINEX(text);
   });
 
   ominexInput.addEventListener("keydown", (e) => {
@@ -87,6 +167,19 @@ document.addEventListener("DOMContentLoaded", () => {
       ominexSend.click();
     }
   });
+
+  // AUTO-BOOT OMINEX if Run button is missing
+    if (!runBtn && idle && chat) {
+    idle.style.display = "none";
+    chat.style.display = "flex";
+    hero?.classList.add("ominex-running");
+
+    if (!OMINEX_BOOTED) {
+        OMINEX_BOOTED = true;
+        typeReply(OMINEX_INTRO);
+    }
+    }
+
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1007,3 +1100,28 @@ function speakOMINEX(text) {
   utter.volume = 1;
   speechSynthesis.speak(utter);
 }
+
+const indicator = document.querySelector('.nav-indicator');
+const links = document.querySelectorAll('.nav-link');
+
+function moveIndicator(el) {
+    const rect = el.getBoundingClientRect();
+    const parentRect = el.parentElement.getBoundingClientRect();
+
+    indicator.style.width = `${rect.width}px`;
+    indicator.style.transform = `translateX(${rect.left - parentRect.left}px)`;
+}
+
+links.forEach(link => {
+    link.addEventListener('mouseenter', () => moveIndicator(link));
+    link.addEventListener('click', () => {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        moveIndicator(link);
+    });
+});
+
+window.addEventListener('load', () => {
+    const active = document.querySelector('.nav-link.active');
+    if (active) moveIndicator(active);
+});

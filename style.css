@@ -1,25 +1,4 @@
 /* Gaming Portfolio Main Styles */
-/* === OMINEX HARD OVERRIDE === */
-.ominex-console,
-.ominex-console * {
-  pointer-events: auto !important;
-}
-
-
-.featured-buttons * {
-  pointer-events: auto !important;
-}
-
-
-.demo-content {
-    pointer-events: none;
-}
-
-.demo-content .play-button {
-    pointer-events: auto;
-    cursor: pointer;
-}
-
 
 :root {
     --background: hsl(222, 84%, 5%);
@@ -50,6 +29,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -60,6 +44,7 @@ body {
     color: var(--foreground);
     line-height: 1.6;
     overflow-x: hidden;
+    
 }
 
 .container {
@@ -69,28 +54,41 @@ body {
 }
 
 /* Navigation Styles */
+/* ================= NAVBAR (LOCKED + CLEAN) ================= */
+
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(34, 40, 49, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+
+    height: 80px;                    /* LOCK HEIGHT */
     z-index: 1000;
-    padding: 1rem 0;
-    transition: all 0.3s ease;
+
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+
+    display: flex;
+    align-items: center;
+
+    transition: background 0.3s ease;
 }
 
+/* Container */
 .nav-container {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Logo */
 .nav-logo {
     display: flex;
     align-items: center;
@@ -102,13 +100,16 @@ body {
 .logo-icon {
     width: 40px;
     height: 40px;
+    border-radius: 10px;
+
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    border-radius: 8px;
+    color: white;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-weight: 700;
-    color: white;
 }
 
 .logo-text {
@@ -116,40 +117,74 @@ body {
     font-weight: 700;
 }
 
+/* ================= MAGIC MENU ================= */
+
 .nav-menu {
+    position: relative;
+
     display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
     list-style: none;
-    gap: 2rem;
+    padding: 0.4rem;
+
+    background: rgba(2, 6, 23, 0.85);
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+
+    backdrop-filter: blur(12px);
 }
 
+/* Magic indicator */
+.nav-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+
+    width: 0;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #38bdf8
+    );
+
+    box-shadow:
+        0 0 12px rgba(34,197,94,0.6),
+        0 0 24px rgba(56,189,248,0.5);
+
+    z-index: 1;
+
+    transition:
+        transform 0.35s cubic-bezier(.4,0,.2,1),
+        width 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+/* Links */
 .nav-link {
-    color: var(--muted-foreground);
+    position: relative;
+    z-index: 2;
+
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+
     text-decoration: none;
     font-weight: 500;
-    position: relative;
-    transition: color 0.3s ease;
+
+    color: var(--muted-foreground);
+
+    transition: color 0.25s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--foreground);
+    color: #f9a302;
 }
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background: var(--primary);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
-}
 
 .mobile-menu-btn {
     display: none;
@@ -207,12 +242,13 @@ body {
 
 /* Hero Section */
 .hero-section {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding: 120px 0 80px;
+    min-height: calc(100vh - 80px);  /* navbar height */
+    padding-top: 80px;               /* EXACT navbar height */
+    padding-bottom: 80px;
 }
 
 .hero-background {
@@ -380,8 +416,23 @@ body {
 }
 
 /* About Section */
+/* ================= ABOUT SECTION (ISOLATED) ================= */
 .about-section {
-    padding: 5rem 0;
+    position: relative;
+    padding: 8rem 0;
+    background:
+      radial-gradient(
+        circle at top,
+        rgba(56, 189, 248, 0.08),
+        transparent 60%
+      ),
+      linear-gradient(
+        180deg,
+        #020617 0%,
+        #050b1a 50%,
+        #020617 100%
+      );
+    z-index: 1;
 }
 
 .about-grid {
@@ -567,8 +618,46 @@ body {
 }
 
 /* Showcase Styles */
+/* ================= SHOWCASE SECTION ================= */
 .showcase-section {
-    padding: 3rem 0;
+    position: relative;
+    padding: 6rem 0 7rem;
+    background:
+      linear-gradient(
+        180deg,
+        #020617 0%,
+        #020617 60%,
+        #050b1a 100%
+      );
+    z-index: 1;
+}
+
+.showcase-section::before,
+.showcase-section::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 120px;
+    pointer-events: none;
+}
+
+.showcase-section::before {
+    top: 0;
+    background: linear-gradient(
+      180deg,
+      #020617,
+      transparent
+    );
+}
+
+.showcase-section::after {
+    bottom: 0;
+    background: linear-gradient(
+      0deg,
+      #020617,
+      transparent
+    );
 }
 
 .category-filter {
@@ -832,9 +921,23 @@ body {
 }
 
 /* Featured Section */
+/* ================= FEATURED INTERACTIVE DEMO ================= */
 .featured-section {
-    padding: 5rem 0;
-    background: rgba(34, 40, 49, 0.2);
+    position: relative;
+    padding: 8rem 0;
+    background:
+      radial-gradient(
+        circle at top,
+        rgba(34, 211, 238, 0.08),
+        transparent 60%
+      ),
+      linear-gradient(
+        180deg,
+        #020617 0%,
+        #050b1a 50%,
+        #020617 100%
+      );
+    z-index: 1;
 }
 
 .featured-grid {
@@ -1505,74 +1608,6 @@ body {
     }
 }
 
-.ominex-console {
-    margin-top: 30px;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid rgba(0,255,255,0.2);
-    background: rgba(0,0,0,0.6);
-}
-
-.ominex-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    background: rgba(0,255,255,0.05);
-    color: cyan;
-    font-weight: bold;
-}
-
-.ai-dot {
-    width: 10px;
-    height: 10px;
-    background: cyan;
-    border-radius: 50%;
-    box-shadow: 0 0 10px cyan;
-}
-
-#ominexScreen {
-    min-height: 420px;
-    max-height: 520px;
-    overflow-y: auto;
-    padding: 25px;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-
-
-.ominex-msg.user {
-    background: rgba(255, 255, 255, 0.05);
-    color: #eaeaea;
-    padding: 14px 18px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    align-self: flex-end;
-}
-
-
-.ominex-input {
-    display: flex;
-    border-top: 1px solid rgba(0,255,255,0.2);
-}
-
-.ominex-input input {
-    flex: 1;
-    background: black;
-    border: none;
-    color: cyan;
-    padding: 12px;
-    outline: none;
-}
-
-.ominex-input button {
-    background: cyan;
-    border: none;
-    color: black;
-    padding: 0 20px;
-    cursor: pointer;
-}
 
 .cinevault-bg {
     background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
@@ -1743,163 +1778,8 @@ body {
   }
 }
 
-/* ===== NAV CAP STRIP (between navbar and hero) ===== */
-.nav-cap{
-  position: relative;
-  height: 180px;                 /* this hides the cap */
-  background: var(--background);  /* same as your site */
-  overflow: hidden;
-  margin-top: 72px;               /* IMPORTANT: same as navbar height */
-}
-
-/* if your navbar height is different, adjust this number */
-.navbar{ height: 72px; }
-
-#capCanvas{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: none;
-}
-
-/* ===== TOP TRANSITION STRIP ===== */
-#top-transition {
-  position: relative;
-  height: 260px;
-  background: #0b1220; /* SAME as site background */
-  overflow: hidden;
-}
-
-#sunCanvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 .project-overlay button {
   pointer-events: auto;
-}
-
-.ominex-msg.ai {
-    background: rgba(0, 255, 255, 0.05);
-    border: 1px solid rgba(0, 255, 255, 0.25);
-    color: #cfffff;
-    padding: 18px 20px;
-    border-radius: 14px;
-    margin-bottom: 18px;
-    white-space: pre-line;
-}
-
-
-.ominex-msg {
-    max-width: 85%;
-    padding: 16px 20px;
-    margin-bottom: 14px;
-    border-radius: 14px;
-}
-
-.ominex-msg.ai {
-    background: linear-gradient(
-        135deg,
-        rgba(0, 255, 255, 0.06),
-        rgba(0, 255, 255, 0.02)
-    );
-    border-left: 3px solid #00d9ff;
-    white-space: pre-line;
-}
-
-.ominex-avatar-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 18px;
-}
-
-.ominex-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #00d9ff 0%, #001f2a 70%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.3);
-    position: relative;
-}
-
-.ominex-core {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #00ffff;
-    box-shadow: 0 0 15px #00ffff;
-}
-
-.ominex-avatar.speaking {
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 15px rgba(0,217,255,0.3); }
-    50% { box-shadow: 0 0 40px rgba(0,217,255,0.7); }
-    100% { box-shadow: 0 0 15px rgba(0,217,255,0.3); }
-}
-
-.ominex-status {
-    font-size: 14px;
-    color: #9deeff;
-    letter-spacing: 1px;
-}
-
-.ominex-card {
-    background: radial-gradient(circle at 20% 20%, rgba(0,255,255,0.05), transparent 60%),
-                #001018;
-}
-
-.neural-glow {
-  width: 16px;
-  height: 16px;
-  background: #00f5ff;
-  border-radius: 50%;
-  box-shadow: 0 0 15px #00f5ff, 0 0 30px #00f5ff;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.6; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.demo-background,
-.floating-element {
-    pointer-events: none;
-}
-
-.featured-buttons,
-.featured-buttons button,
-.featured-buttons a {
-    pointer-events: auto;
-    position: relative;
-    z-index: 10;
-}
-
-.play-btn {
-  display: inline-block;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: 0.2s ease;
-}
-
-.play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0,255,255,0.5);
 }
 
 #testClick,
@@ -1938,3 +1818,537 @@ body:not(.ominex-live) .ominex-demo-input input {
 .contact-form input::placeholder {
   color: var(--muted-foreground);
 }
+/* ================= OMINEX SECTION ================= */
+
+.ominex-section {
+  min-height: 100vh;
+  padding: 120px 0;
+  position: relative;
+  scroll-margin-top: 100px;
+}
+
+/* NAV OFFSET */
+body {
+  padding-top: 80px;
+}
+
+/* ================= HERO ================= */
+
+.ominex-hero {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at center,
+    rgba(56, 189, 248, 0.18),
+    #020617 65%
+  );
+  box-shadow: 0 0 120px rgba(56, 189, 248, 0.18);
+  overflow: hidden;
+}
+
+/* ================= VISUAL ================= */
+
+.ominex-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ominex-visual::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.28),
+    transparent 60%
+  );
+  animation: ominexPulse 6s ease-in-out infinite;
+}
+
+/* ================= IDLE ================= */
+
+.ominex-idle {
+  z-index: 2;
+  font-size: 0.9rem;
+  letter-spacing: 0.28em;
+  color: #7dd3fc;
+  opacity: 0.9;
+  animation: idleFloat 3s ease-in-out infinite;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ================= CHAT SYSTEM ================= */
+
+.ominex-chat {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.92);
+  opacity: 0;
+  animation: chatIn 0.6s ease forwards;
+}
+
+/* ================= CLASSIC DEMO PANEL ================= */
+
+.ominex-chat-panel {
+  width: 100%;
+  max-width: 720px;
+  background: radial-gradient(
+    circle at top,
+    rgba(30, 41, 59, 0.9),
+    rgba(2, 6, 23, 0.95)
+  );
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.15),
+    0 30px 80px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= CHAT SCREEN ================= */
+
+#ominexScreen {
+  height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e5e7eb;
+}
+
+/* ================= MESSAGES ================= */
+
+.ominex-msg {
+  margin-bottom: 10px;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+.ominex-msg.ai {
+  color: #38bdf8;
+}
+
+.ominex-msg.user {
+  color: #a7f3d0;
+  text-align: right;
+}
+
+/* ================= INPUT ================= */
+
+.ominex-input {
+  display: flex;
+  gap: 8px;
+}
+
+#ominexInput {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #e5e7eb;
+  outline: none;
+  font-family: "JetBrains Mono", monospace;
+}
+
+#ominexInput::placeholder {
+  color: #64748b;
+}
+
+#ominexSend {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  color: #020617;
+  cursor: pointer;
+}
+
+#ominexSend:hover {
+  filter: brightness(1.1);
+}
+
+/* ================= RUN STATE ================= */
+
+.ominex-running .ominex-idle {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.ominex-running .ominex-chat {
+  display: flex;
+  opacity: 1;
+}
+
+/* ================= SCROLLBAR ================= */
+
+#ominexScreen::-webkit-scrollbar {
+  width: 6px;
+}
+
+#ominexScreen::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 6px;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes ominexPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+@keyframes idleFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes chatIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .ominex-hero {
+    min-height: 520px;
+  }
+}
+
+/* ================= CHAT LAYOUT FIX ================= */
+
+/* Make chat panel fill hero nicely */
+.ominex-chat-panel {
+  height: 100%;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Messages take all available space */
+#ominexScreen {
+  flex: 1;
+  height: auto;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+/* Input bar locked to bottom */
+.ominex-input {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* Longer input for typing */
+#ominexInput {
+  flex: 1;
+  min-height: 44px;
+  font-size: 14px;
+}
+
+/* Send button stays compact */
+#ominexSend {
+  min-height: 44px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+
+/* ===== DEMO-CORRECT CHAT BEHAVIOR (FINAL OVERRIDE) ===== */
+
+/* Chat fills the entire hero like the old demo */
+.ominex-chat {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 32px;
+}
+
+/* Remove the boxed-card feeling */
+.ominex-chat-panel {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Messages float in the hero space */
+#ominexScreen {
+  flex: 1;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+/* Input BAR anchored to bottom of hero */
+.ominex-input {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 32px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Long typing field like the demo */
+#ominexInput {
+  flex: 1;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+/* Send stays tight */
+#ominexSend {
+  min-height: 48px;
+  padding: 0 22px;
+}
+
+.ominex-tags {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ================= OMINEX INTRO ================= */
+
+.ominex-intro-section {
+  padding: 6rem 0 4rem;
+  background: transparent;          /* do NOT inherit skills bg */
+  text-align: center;
+}
+
+.ominex-intro-section .section-header {
+  margin-bottom: 2rem;
+}
+
+:root {
+  --electric-white: 255, 255, 255;
+  --glow-blue: 56, 189, 248;
+  --glow-purple: 139, 92, 246;
+  --glow-green: 16, 185, 129;
+  --glow-pink: 236, 72, 153;
+  --electric-orange: 255, 153, 51;
+}
+
+/* ================= SKILL CARD GLOW ================= */
+.skill-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s ease;
+}
+
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  background: linear-gradient(
+    120deg,
+    rgba(var(--glow-blue), 0.6),
+    rgba(var(--glow-purple), 0.6),
+    rgba(var(--glow-green), 0.6)
+  );
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.skill-card:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+/* ================= PROJECT CARD GLOW ================= */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    130deg,
+    rgba(var(--glow-purple), 0.8),
+    rgba(var(--glow-blue), 0.8),
+    rgba(var(--glow-pink), 0.8)
+  );
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* ================= SHOWCASE ITEM GLOW ================= */
+.showcase-item {
+  position: relative;
+}
+
+.showcase-item::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  background: linear-gradient(
+    120deg,
+    rgba(var(--glow-blue), 0.5),
+    rgba(var(--glow-purple), 0.5)
+  );
+  opacity: 0;
+  filter: blur(10px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.showcase-item:hover::before {
+  opacity: 1;
+}
+
+/* ================= ELECTRIC CARD BASE ================= */
+.skill-card,
+.project-card,
+.showcase-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+/* ================= ELECTRIC CARD BASE ================= */
+.skill-card,
+.project-card,
+.showcase-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+/* ================= ELECTRIC ENERGY LAYER ================= */
+.skill-card::before,
+.project-card::before,
+.showcase-item::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(var(--electric-white), 0.0),
+      rgba(var(--electric-white), 0.35),
+      rgba(var(--electric-white), 0.0),
+      rgba(var(--electric-white), 0.45),
+      rgba(var(--electric-white), 0.0)
+    );
+  filter: blur(18px);
+  opacity: 0;
+  animation: electric-spin 6s linear infinite;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes electric-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.skill-card:hover,
+.project-card:hover,
+.showcase-item:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+.skill-card:hover::before,
+.project-card:hover::before,
+.showcase-item:hover::before {
+  opacity: 1;
+}
+
+.skill-card,
+.project-card,
+.showcase-item {
+  position: relative;
+  background: var(--card);
+  border-radius: 12px;
+}
+
+/* ================= NEON ORANGE BORDER ================= */
+.skill-card::after,
+.project-card::after,
+.showcase-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+
+  border: 2px solid rgba(255, 170, 60, 0.9);
+
+  box-shadow:
+    0 0 6px rgba(255, 170, 60, 0.6),
+    0 0 14px rgba(255, 140, 0, 0.45),
+    inset 0 0 6px rgba(255, 200, 120, 0.4);
+
+  pointer-events: none;
+}
+
+@keyframes neon-flicker {
+  0%, 100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.skill-card::after,
+.project-card::after,
+.showcase-item::after {
+  animation: neon-flicker 3.5s ease-in-out infinite;
+}
+
+.skill-card:hover::after,
+.project-card:hover::after,
+.showcase-item:hover::after {
+  box-shadow:
+    0 0 10px rgba(255, 170, 60, 0.9),
+    0 0 22px rgba(255, 140, 0, 0.7),
+    inset 0 0 10px rgba(255, 200, 120, 0.6);
+}
+
