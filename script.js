@@ -283,11 +283,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const formData = new FormData(contactForm);
             const data = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                subject: formData.get('subject'),
-                message: formData.get('message')
-            };
+                        name: (formData.get("name") || "").toString().trim(),
+                        email: (formData.get("email") || "").toString().trim(),
+                        subject: (formData.get("title") || formData.get("subject") || "").toString().trim(),
+                        message: (formData.get("message") || "").toString().trim()
+                        };
 
             // Simple validation
             if (!data.name || !data.email || !data.subject || !data.message) {
@@ -301,10 +301,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            console.log('Form submitted:', data);
-            showToast();
-            contactForm.reset();
-        });
+           emailjs.send(
+            "service_vjktl3i",     // ✅ Service ID
+            "template_eu0rc1n",    // ✅ Template ID
+            {
+                name: data.name,         // ✅ MATCHES {{name}}
+                email: data.email,       // ✅ MATCHES {{email}}
+                subject: data.subject,   // ✅ MATCHES {{subject}}
+                message: data.message    // ✅ MATCHES {{message}}
+            }
+            ).then(() => {
+                showToast();
+                contactForm.reset();
+            }).catch((error) => {
+                console.error("EmailJS error:", error);
+                showNotification("Failed to send message.", "error");
+            });  
+ });
 
         // Form input animations and validation
         const inputs = document.querySelectorAll('input, textarea');
@@ -1101,15 +1114,15 @@ function speakOMINEX(text) {
   speechSynthesis.speak(utter);
 }
 
-const indicator = document.querySelector('.nav-indicator');
-const links = document.querySelectorAll('.nav-link');
+const indicator = document.querySelector(".nav-indicator");
+const links = document.querySelectorAll(".nav-link");
 
 function moveIndicator(el) {
-    const rect = el.getBoundingClientRect();
-    const parentRect = el.parentElement.getBoundingClientRect();
-
-    indicator.style.width = `${rect.width}px`;
-    indicator.style.transform = `translateX(${rect.left - parentRect.left}px)`;
+  if (!indicator || !el) return;
+  const rect = el.getBoundingClientRect();
+  const parentRect = el.parentElement.getBoundingClientRect();
+  indicator.style.width = `${rect.width}px`;
+  indicator.style.transform = `translateX(${rect.left - parentRect.left}px)`;
 }
 
 links.forEach(link => {
